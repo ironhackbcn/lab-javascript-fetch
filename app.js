@@ -73,9 +73,9 @@ function main() {
   //WORDPRESS API
 
   function getPosts(numPosts) {
-    return fetch(
-      `http://dev-js-explained-api.pantheonsite.io/wp-json/wp/v2/posts?per_page=${numPosts}`
-    ).then(function(response) {
+    var proxyURL = "https://cors-anywhere.herokuapp.com/";
+    var targetURL = `http://dev-js-explained-api.pantheonsite.io/wp-json/wp/v2/posts?per_page=${numPosts}`;
+    return fetch(proxyURL + targetURL).then(function(response) {
       return response.json();
     });
   }
@@ -97,11 +97,20 @@ function main() {
       var a = document.querySelector(`a[data-id="${results[j].id}"]`);
       a.addEventListener("click", function getLink(event) {
         event.preventDefault();
+        var y = event.target;
+        //console.log(y);
         fetch(
           `http://dev-js-explained-api.pantheonsite.io/wp-json/wp/v2/posts/${
-            a.dataset.id
+            y.dataset.id
           }`
-        );
+        ).then(function(response) {
+          console.log(response);
+          return response.json; 
+          // var details = document.querySelector(".wordpress-details");
+         // details.innerHTML = y;
+          /* var x = response.json(); */
+         // return y;
+        });
       });
     }
 
