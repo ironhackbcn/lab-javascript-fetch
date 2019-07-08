@@ -1,7 +1,7 @@
 'use strict';
 
 function main() {
-/*
+
   function getDog(){
     return fetch('https://dog.ceo/api/breeds/image/random')
     .then(function(response){
@@ -58,7 +58,7 @@ function main() {
   }
   
   initRates();
-*/
+
   function getPosts(numPosts){
     return fetch(`https://dev-js-explained-api.pantheonsite.io/wp-json/wp/v2/posts?per_page=${numPosts}`)
     .then(function(response){
@@ -66,10 +66,12 @@ function main() {
       .then(function(data){
         var postList = `<ul>`
         data.forEach(function(post){
-          postList += `<li><a data-id="${post.id}" href="${post.link}">POST_TITLE</a></li>`;
+          postList += `<li><a data-id="${post.id}" href="${post.link}">${post.title.rendered}</a></li>`;
           console.log(postList);
         });        
         console.log(data);
+        postList += `</ul>`;
+        return postList;
       })
       .catch(function(error){
         console.error(error);
@@ -82,7 +84,16 @@ function main() {
 
   async function initPosts(){
     var posts = await getPosts(5);
-    
+    var sectionList = document.createElement('section');
+    sectionList.innerHTML = posts;
+    var mainElement = document.querySelector('main');
+    mainElement.appendChild(sectionList); 
+    var arrayLi = document.querySelectorAll('li');
+    arrayLi.forEach(function(el){
+      el.addEventListener('click', function(event){
+        event.preventDefault();
+      });
+    })
   }
   initPosts();
 
