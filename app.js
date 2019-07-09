@@ -31,13 +31,11 @@ function main() {
         return response.json();
       })
       .then(function(data) {
-        /*     console.log(data); */
         var ratesObject = data.rates;
         var ratesArray = Object.keys(ratesObject).map(function(key) {
           return [String(key), ratesObject[key]];
         });
 
-        /* console.log(ratesArray); */
         var markup = `<select id="rates">`;
         for (var i = 0; i < ratesArray.length; i++) {
           markup += `<option>${ratesArray[i][0]} - ${
@@ -45,12 +43,10 @@ function main() {
           }</option>`;
         }
         markup += `</select>`;
-        /*    console.log(markup); */
+
         var exchangeDiv = document.querySelector(".exchange-rates");
 
-        /*  console.log(exchangeValue); */
         exchangeDiv.innerHTML = markup;
-        /*     */
       })
       .catch(function(error) {
         console.error(error);
@@ -98,24 +94,21 @@ function main() {
       a.addEventListener("click", function getLink(event) {
         event.preventDefault();
         var y = event.target;
-        //console.log(y);
         fetch(
           `http://dev-js-explained-api.pantheonsite.io/wp-json/wp/v2/posts/${
             y.dataset.id
           }`
         ).then(function(response) {
           console.log(response);
-          return response.json; 
-          // var details = document.querySelector(".wordpress-details");
-         // details.innerHTML = y;
+          var details = document.querySelector(".wordpress-details");
+          details.innerHTML = response;
+          return response.json;
+      
           /* var x = response.json(); */
-         // return y;
+          // return y;
         });
       });
     }
-
-    /* setTimeout(function(){var enlace = document.getElementById("#link_0");
-    console.log(enlace);}, 1000); */
   }
   initPosts(5);
 }
