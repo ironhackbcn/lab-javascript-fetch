@@ -67,21 +67,18 @@ function main() {
     data.forEach(function(post) {
       li += `<li><a data-id="${post.id}" href="${post.link}">${post.title.rendered}</a></li>`; 
   })
-  
-  
   var ulSelected = document.querySelector('ul');
   ulSelected.innerHTML = li;
   var lis = document.querySelectorAll('a');
-  console.log(lis)
   lis.forEach((itemLi) => {
     itemLi.addEventListener('click',(e)=> {
       generateDetails(itemLi.dataset.id);
       e.preventDefault();
       
     })
-  })
-  
+  }) 
 }
+
 async function generateDetails(id){
   var response = await fetch(`https://cors-anywhere.herokuapp.com/https://dev-js-explained-api.pantheonsite.io/wp-json/wp/v2/posts/${id}`);
   var data = await response.json();
@@ -92,12 +89,9 @@ async function generateDetails(id){
   articleSelected.innerHTML = `
   Titulo: ${data.title.rendered}
   Content: ${data.content.rendered}
-  `;
-  
+  `;  
 }
   initPost();
-
-  
 }
 
 window.addEventListener('load', main);
