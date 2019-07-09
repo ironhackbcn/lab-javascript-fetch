@@ -103,9 +103,6 @@ function main() {
           var details = document.querySelector(".wordpress-details");
           details.innerHTML = response;
           return response.json;
-      
-          /* var x = response.json(); */
-          // return y;
         });
       });
     }
